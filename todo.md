@@ -1,4 +1,4 @@
-- Q3 Presentation  
+- Q3 Presentation
   - Gather content
     - [ ] Outline key themes
     - [ ] Collect sales metrics
