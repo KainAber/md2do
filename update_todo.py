@@ -1,5 +1,5 @@
 import speech_recognition as sr
-from transformers import pipeline
+import ollama
 
 recognizer = sr.Recognizer()
 with sr.Microphone() as source:
@@ -11,15 +11,26 @@ with sr.Microphone() as source:
 with open("todo.md", "r") as f:
     todo_content = f.read()
 
-generator = pipeline("text-generation", model="distilgpt2")
-prompt = (
+system_prompt = (
     "You are a helpful assistant for editing markdown todo lists. "
-    "Here is the current todo.md file:\n" + todo_content +
-    "\n\nUser command: '" + command + "'\n"
-    "Update the todo.md file accordingly. Output only the new todo.md content."
+    "You will be given a to-do list in markdown format together with an instruction to update the to-do list. "
+    "Your output should consist only of the updated markdown text **without any other text or comments**."
 )
 
-result = generator(prompt, max_length=512, num_return_sequences=1)[0]['generated_text']
+prompt = (
+    "**INSTRUCTION**\n\n" + command
+    "**TO-DO LIST** (only return what is below this line)\n\n" + todo_content + "\n\n\n"
+)
+
+response = ollama.chat(
+    model="mistral",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant for editing markdown todo lists."},
+        {"role": "user", "content": prompt}
+    ]
+)
+
+result = response["message"]["content"]
 
 with open("todo.md", "w") as f:
     f.write(result)
