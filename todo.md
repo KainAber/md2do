@@ -1,17 +1,17 @@
-- Q3 Presentation
-  - Gather content
+* Q3 Presentation
+  * Gather content
     - [ ] Outline key themes
     - [ ] Collect sales metrics
     - [ ] Collect support metrics
     - Finalize draft slides
-  - Review & delivery
+  * Review & delivery
     - [ ] Schedule dry run
     - Send calendar invites
-- v1.3 Release
-  - Bugfix: login issue
+* v1.3 Release
+  * Bugfix: login issue
     - [ ] Reproduce issue
     - Implement fix
     - Write regression test
-  - Communication
+  * Communication
     - [ ] Waiting for changelog update
     - Notify users
