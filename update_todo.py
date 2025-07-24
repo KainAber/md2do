@@ -18,8 +18,8 @@ system_prompt = (
 )
 
 prompt = (
-    "**INSTRUCTION**\n\n" + command
-    "**TO-DO LIST** (only return what is below this line)\n\n" + todo_content + "\n\n\n"
+    "**INSTRUCTION**\n\n" + command + "\n\n\n"
+    "**TO-DO LIST** (only return what is below this line)\n\n" + todo_content
 )
 
 response = ollama.chat(
