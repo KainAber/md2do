@@ -12,6 +12,8 @@ Your response must only contain the JSON array of operations, and nothing else.
   - **completed tasks**: marked with a single dash and x in square brackets (- [x] ... )
 - every third level item has a parent item that is a second level item
 - every second level item has a parent item that is a top level item
+- important items are marked in bold (**) 
+- the bracketed expression at the end of a bullet is never marked bold, i.e. "- **task** (details)"
 
 # Supported operations
 
