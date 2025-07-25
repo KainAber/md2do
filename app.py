@@ -2,6 +2,8 @@ import yaml
 import json
 import logging
 from openai import OpenAI
+import subprocess
+import re
 
 # Configure logging - show everything except DEBUG
 logging.basicConfig(
@@ -44,6 +46,49 @@ def apply_row_operations(lines, operations):
                 to_idx -= 1
             lines.insert(to_idx, line)
     return lines
+
+def show_clean_git_diff():
+    try:
+        result = subprocess.run(["git", "diff", "-U1", "--word-diff=color", "todo.md"], 
+                              capture_output=True, text=True, check=True)
+        
+        if not result.stdout.strip():
+            logger.info("No changes detected")
+            return
+        
+        # Split into lines and replace scaffolding with empty strings
+        lines = result.stdout.split('\n')
+        clean_lines = []
+        
+        for line in lines:
+            # Strip ANSI color codes for comparison
+            clean_line = re.sub(r'\x1b\[[0-9;]*[mK]', '', line)
+            
+            # Replace scaffolding lines with empty strings
+            if (clean_line.startswith('diff --git') or 
+                clean_line.startswith('index ') or 
+                clean_line.startswith('---') or 
+                clean_line.startswith('+++') or
+                clean_line.startswith('@@')):
+                clean_lines.append('')
+            else:
+                # Keep all other lines as-is
+                clean_lines.append(line)
+        
+        # Join and replace multiple empty lines with single empty line
+        content = '\n'.join(clean_lines)
+        content = re.sub(r'\n\s*\n\s*\n+', '\n\n', content)
+        
+        # Remove leading/trailing empty lines
+        content = content.strip()
+        
+        if content:
+            logger.info("Changes:\n" + content)
+        else:
+            logger.info("No changes detected")
+            
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Git diff failed: {e}")
 
 messages = []
 
@@ -96,6 +141,7 @@ while True:
         with open("todo.md", "w") as f:
             f.write("\n".join(new_todo_lines))
         logger.info(comment)
+        show_clean_git_diff()
     except ValueError:
         logger.error("Could not find JSON array in LLM output.")
         continue

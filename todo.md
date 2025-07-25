@@ -24,9 +24,9 @@
     - Add menu bar icon
     - Add notification system
   * Git Tracking
+    - [x] Add git diff logging
     - [ ] Add git commits after change
-    - [ ] Add change confirmation via git diff logging (verbal?)
-    - Add ability to roll back a commit (is this best practice?)
+    - [ ] Add ability to roll back a commit (is this best practice?)
   * System integration
     - Integrate external calendars
     - Add Web interface
