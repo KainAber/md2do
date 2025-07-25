@@ -1,9 +1,19 @@
 import yaml
 import json
+import logging
 from openai import OpenAI
 
-# Debug mode - set to True to see LLM output and user input
-DEBUG_MODE = False
+# Configure logging - show everything except DEBUG
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger(__name__)
+
+# Suppress HTTP DEBUG and INFO logs
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
 
 # Load prompts and config once
 with open("system_prompt.txt", "r") as f:
@@ -16,42 +26,34 @@ with open("openai_api_config.yml", "r") as f:
 client = OpenAI(api_key=config["api key"])
 
 def apply_row_operations(lines, operations):
-    deletes = [op for op in operations if op["op"] == "delete"]
-    others = [op for op in operations if op["op"] != "delete"]
-    # Separate moves to apply after others (to avoid index confusion)
-    moves = [op for op in others if op["op"] == "move"]
-    non_moves = [op for op in others if op["op"] != "move"]
-    for op in non_moves:
-        idx = op["row"] - 1
+    for op in operations:
         if op["op"] == "replace":
+            idx = op["row"] - 1
             lines[idx] = op["content"]
+        elif op["op"] == "delete":
+            idx = op["row"] - 1
+            del lines[idx]
         elif op["op"] == "insert":
+            idx = op["row"] - 1
             lines.insert(idx, op["content"])
-    for op in sorted(deletes, key=lambda x: -x["row"]):
-        idx = op["row"] - 1
-        del lines[idx]
-    # Apply moves after all other ops
-    for op in moves:
-        from_idx = op["row"] - 1
-        to_idx = op["to"] - 1
-        line = lines.pop(from_idx)
-        # If moving down, insertion index decreases by 1 after pop
-        if to_idx > from_idx:
-            to_idx -= 1
-        lines.insert(to_idx, line)
+        elif op["op"] == "move":
+            from_idx = op["row"] - 1
+            to_idx = op["to"] - 1
+            line = lines.pop(from_idx)
+            if to_idx > from_idx:
+                to_idx -= 1
+            lines.insert(to_idx, line)
     return lines
 
 messages = []
 
-print("Type your todo command (or 'exit' to quit):")
+logger.info("Type your todo command (or 'q' to quit):")
 while True:
     user_command = input("> ").strip()
-    if user_command.lower() in ("exit", "quit"):
-        print("Exiting.")
+    if user_command.lower() == "q":
         break
     
-    if DEBUG_MODE:
-        print(f"\n[DEBUG] User input: {user_command}")
+    logger.debug(f"User input: {user_command}")
     
     # Read current todo.md
     with open("todo.md", "r") as f:
@@ -74,8 +76,7 @@ while True:
         max_tokens=512
     )
     content = response.choices[0].message.content
-    if DEBUG_MODE:
-        print(f"[DEBUG] LLM output:\n{content}")
+    logger.debug(f"LLM output:\n{content}")
     # Parse for JSON array and helpful comment
     operations = None
     comment = None
@@ -94,12 +95,12 @@ while True:
         new_todo_lines = apply_row_operations(todo_lines, operations)
         with open("todo.md", "w") as f:
             f.write("\n".join(new_todo_lines))
-        print(comment + "\n")
+        logger.info(comment)
     except ValueError:
-        print("[Error] Could not find JSON array in LLM output.\n")
+        logger.error("Could not find JSON array in LLM output.")
         continue
     except Exception as e:
-        print(f"[Error] Failed to parse operations as JSON: {e}\nRaw operations string:\n{json_str}\n")
+        logger.error(f"Failed to parse operations as JSON: {e}\nRaw operations string:\n{json_str}")
         continue
     # Update messages for next turn (keep system prompt out, add user and assistant)
     messages = new_messages
