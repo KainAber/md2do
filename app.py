@@ -18,7 +18,10 @@ client = OpenAI(api_key=config["api key"])
 def apply_row_operations(lines, operations):
     deletes = [op for op in operations if op["op"] == "delete"]
     others = [op for op in operations if op["op"] != "delete"]
-    for op in others:
+    # Separate moves to apply after others (to avoid index confusion)
+    moves = [op for op in others if op["op"] == "move"]
+    non_moves = [op for op in others if op["op"] != "move"]
+    for op in non_moves:
         idx = op["row"] - 1
         if op["op"] == "replace":
             lines[idx] = op["content"]
@@ -27,6 +30,15 @@ def apply_row_operations(lines, operations):
     for op in sorted(deletes, key=lambda x: -x["row"]):
         idx = op["row"] - 1
         del lines[idx]
+    # Apply moves after all other ops
+    for op in moves:
+        from_idx = op["row"] - 1
+        to_idx = op["to"] - 1
+        line = lines.pop(from_idx)
+        # If moving down, insertion index decreases by 1 after pop
+        if to_idx > from_idx:
+            to_idx -= 1
+        lines.insert(to_idx, line)
     return lines
 
 messages = []
