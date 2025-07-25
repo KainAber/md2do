@@ -35,9 +35,8 @@ while True:
     # Read current todo.md
     with open("todo.md", "r") as f:
         todo_lines = f.read().splitlines()
-    numbered_todo = "\n".join(f"{i}: {line}" for i, line in enumerate(todo_lines))
+    numbered_todo = "\n".join(f"{i+1}: {line}" for i, line in enumerate(todo_lines))
     user_prompt = user_prompt_template.format(numbered_todo=numbered_todo, user_command=user_command)
-    print(user_prompt)
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
