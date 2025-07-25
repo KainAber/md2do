@@ -4,7 +4,8 @@
   * Voice Conversation
     - [ ] **Add back-and-forth chat-like behaviour** (only give the context for how to use the system in the beginning?)
     - [ ] Add voice input
-    - [ ] Add voice output (split output into natural language and JSON)
+    - Add voice output
+    - [ ] Split output into natural language and JSON
   * Scope Extension
     - [ ] Add task / project metadata
     - Add file support (md links?)

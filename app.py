@@ -29,6 +29,8 @@ def apply_row_operations(lines, operations):
         del lines[idx]
     return lines
 
+messages = []
+
 print("Type your todo command (or 'exit' to quit):")
 while True:
     user_command = input("> ").strip()
@@ -43,13 +45,18 @@ while True:
     with open("todo.md", "r") as f:
         todo_lines = f.read().splitlines()
     numbered_todo = "\n".join(f"{i+1}: {line}" for i, line in enumerate(todo_lines))
-    user_prompt = user_prompt_template.format(numbered_todo=numbered_todo, user_command=user_command)
+    # Prepare system prompt with current todo.md
+    system_prompt_with_todo = system_prompt.format(numbered_todo=numbered_todo)
+    # Build new messages list: system prompt, then all previous user/assistant messages, then new user message
+    new_messages = [
+        {"role": "system", "content": system_prompt_with_todo},
+    ]
+    if messages:
+        new_messages.extend(messages[1:])  # skip previous system prompt
+    new_messages.append({"role": "user", "content": user_command})
     response = client.chat.completions.create(
         model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
+        messages=new_messages,
         temperature=0.0,
         top_p=1.0,
         max_tokens=512
@@ -59,10 +66,13 @@ while True:
         print(f"[DEBUG] LLM output JSON:\n{content}")
     try:
         operations = json.loads(content)
+        new_todo_lines = apply_row_operations(todo_lines, operations)
+        with open("todo.md", "w") as f:
+            f.write("\n".join(new_todo_lines))
+        print("todo.md updated!\n")
     except Exception as e:
         print("Failed to parse LLM output as JSON:", content)
         continue
-    new_todo_lines = apply_row_operations(todo_lines, operations)
-    with open("todo.md", "w") as f:
-        f.write("\n".join(new_todo_lines))
-    print("todo.md updated!\n") 
+    # Update messages for next turn (keep system prompt out, add user and assistant)
+    messages = new_messages
+    messages.append({"role": "assistant", "content": content}) 
