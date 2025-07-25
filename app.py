@@ -75,15 +75,31 @@ while True:
     )
     content = response.choices[0].message.content
     if DEBUG_MODE:
-        print(f"[DEBUG] LLM output JSON:\n{content}")
+        print(f"[DEBUG] LLM output:\n{content}")
+    # Parse for JSON array and helpful comment
+    operations = None
+    comment = None
+    
+    lines = content.split('\n')
+    stripped_lines = [line.strip() for line in lines]
+    
     try:
-        operations = json.loads(content)
+        start_idx = stripped_lines.index('[')
+        end_idx = stripped_lines.index(']', start_idx) + 1
+        
+        json_str = '\n'.join(lines[start_idx:end_idx])
+        operations = json.loads(json_str)
+        comment = '\n'.join(lines[end_idx:]).strip()
+        
         new_todo_lines = apply_row_operations(todo_lines, operations)
         with open("todo.md", "w") as f:
             f.write("\n".join(new_todo_lines))
-        print("todo.md updated!\n")
+        print(comment + "\n")
+    except ValueError:
+        print("[Error] Could not find JSON array in LLM output.\n")
+        continue
     except Exception as e:
-        print("Failed to parse LLM output as JSON:", content)
+        print(f"[Error] Failed to parse operations as JSON: {e}\nRaw operations string:\n{json_str}\n")
         continue
     # Update messages for next turn (keep system prompt out, add user and assistant)
     messages = new_messages
