@@ -25,7 +25,7 @@
     - Add notification system
   * Git Tracking
     - [x] Add git diff logging
-    - [ ] Add git commits after change
+    - [x] Add git commits after change
     - [ ] Add ability to roll back a commit (is this best practice?)
   * System integration
     - Integrate external calendars
