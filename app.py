@@ -2,6 +2,9 @@ import yaml
 import json
 from openai import OpenAI
 
+# Debug mode - set to True to see LLM output and user input
+DEBUG_MODE = False
+
 # Load prompts and config once
 with open("system_prompt.txt", "r") as f:
     system_prompt = f.read()
@@ -32,6 +35,10 @@ while True:
     if user_command.lower() in ("exit", "quit"):
         print("Exiting.")
         break
+    
+    if DEBUG_MODE:
+        print(f"\n[DEBUG] User input: {user_command}")
+    
     # Read current todo.md
     with open("todo.md", "r") as f:
         todo_lines = f.read().splitlines()
@@ -48,7 +55,8 @@ while True:
         max_tokens=512
     )
     content = response.choices[0].message.content
-    print("Raw LLM output:", content)
+    if DEBUG_MODE:
+        print(f"[DEBUG] LLM output JSON:\n{content}")
     try:
         operations = json.loads(content)
     except Exception as e:

@@ -2,7 +2,7 @@
   * Bugs
     - [x] Check out / Fix the consecutive edits + line bleed errors
   * Voice Conversation
-    - **Add back-and-forth chat-like behaviour** (only give the context for how to use the system in the beginning?)
+    - [ ] **Add back-and-forth chat-like behaviour** (only give the context for how to use the system in the beginning?)
     - [ ] Add voice input
     - [ ] Add voice output (split output into natural language and JSON)
   * Scope Extension
