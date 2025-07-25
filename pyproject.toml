@@ -4,11 +4,6 @@ version = "0.1.0"
 description = "Speech-to-LLM todo.md updater"
 requires-python = ">=3.8"
 dependencies = [
-    "speechrecognition",
-    "pyaudio",
-    "transformers",
-    "torch",
-    "ollama"
+    "openai",
+    "pyyaml"
 ]
-
-[tool.uv] 

@@ -10,7 +10,7 @@
 * v1.3 Release
   * Bugfix: login issue
     - [ ] Reproduce issue
-    - Implement fix
+    - [ ] Implement fix
     - Write regression test
   * Communication
     - [ ] Waiting for changelog update
