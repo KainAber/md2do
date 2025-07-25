@@ -12,7 +12,6 @@
     - [ ] Add voice output
   * Scope Extension
     - Add file support (md links?)
-    - Add file support (md links?)
     - Add calendar / scheduled items (timestamps?)
     - Add email
   * View Creation
