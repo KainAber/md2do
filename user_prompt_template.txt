@@ -1,0 +1,4 @@
+Current todo list (with row numbers):
+{numbered_todo}
+
+User command: "{user_command}" 
