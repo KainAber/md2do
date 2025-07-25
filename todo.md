@@ -11,7 +11,6 @@
     - [ ] Add voice input
     - [ ] Add voice output
   * Scope Extension
-    - [ ] Add task / project metadata (@tags, #tags etc)
     - Add file support (md links?)
     - Add calendar / scheduled items (timestamps?)
     - Add email
