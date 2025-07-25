@@ -108,7 +108,8 @@ def rollback_previous_commit():
         
         # Check if the commit message starts with "Update todo:"
         commit_line = result.stdout.strip()
-        if not commit_line.startswith("Update todo:"):
+        print(commit_line)
+        if not "Update todo:" in commit_line:
             logger.info("Latest commit was not made by this app, cannot rollback")
             return False
         
