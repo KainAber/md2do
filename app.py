@@ -79,8 +79,8 @@ def show_clean_git_diff():
         content = '\n'.join(clean_lines)
         content = re.sub(r'\n\s*\n\s*\n+', '\n\n', content)
         
-        # Remove leading/trailing empty lines
-        content = content.strip()
+        # Remove only trailing empty lines, preserve leading spaces
+        content = content.rstrip()
         
         if content:
             logger.info("Changes:\n" + content)
