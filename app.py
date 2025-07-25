@@ -16,12 +16,14 @@ def apply_row_operations(lines, operations):
     deletes = [op for op in operations if op["op"] == "delete"]
     others = [op for op in operations if op["op"] != "delete"]
     for op in others:
+        idx = op["row"] - 1
         if op["op"] == "replace":
-            lines[op["row"]] = op["content"]
+            lines[idx] = op["content"]
         elif op["op"] == "insert":
-            lines.insert(op["row"], op["content"])
+            lines.insert(idx, op["content"])
     for op in sorted(deletes, key=lambda x: -x["row"]):
-        del lines[op["row"]]
+        idx = op["row"] - 1
+        del lines[idx]
     return lines
 
 print("Type your todo command (or 'exit' to quit):")
@@ -35,6 +37,7 @@ while True:
         todo_lines = f.read().splitlines()
     numbered_todo = "\n".join(f"{i}: {line}" for i, line in enumerate(todo_lines))
     user_prompt = user_prompt_template.format(numbered_todo=numbered_todo, user_command=user_command)
+    print(user_prompt)
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -42,6 +45,7 @@ while True:
             {"role": "user", "content": user_prompt}
         ],
         temperature=0.0,
+        top_p=1.0,
         max_tokens=512
     )
     content = response.choices[0].message.content

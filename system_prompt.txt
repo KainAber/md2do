@@ -15,26 +15,26 @@ Your response must only contain the JSON array of operations, and nothing else.
 
 # Supported operations
 
-- replace: Replace the content of a row. Parameters: row (zero-based index), content (the new line)
-- delete: Delete a row. Parameters: row (zero-based index)
-- insert: Insert a new row. Parameters: row (zero-based index, where to insert), content (the new line)
+- replace: Replace the content of a row. Parameters: row (one-based index), content (the new line)
+- delete: Delete a row. Parameters: row (one-based index)
+- insert: Insert a new row. Parameters: row (one-based index, where to insert), content (the new line)
 
 # Example
 
 Current todo list (with row numbers):
-0: * Project Alpha
-1:   * Planning
-2:     - [ ] Define scope
-3:     - [ ] Assign team
-4:     - Get budget approved
-5:   * Execution
+1: * Project Alpha
+2:   * Planning
+3:     - [ ] Define scope
+4:     - [ ] Assign team
+5:     - Get budget approved
+6:   * Execution
 
 User command: "Check off define scope, unblock get budget approved, and add new task for engaging stakeholders after get budget approved"
 
 Example output:
 [
-  {"op": "replace", "row": 2, "content": "    - [x] Define scope"},
-  {"op": "replace", "row": 4, "content": "    - [ ] Get budget approved"}
-  {"op": "insert", "row": 6, "content": "    - [ ] Engage stakeholders"}
+  {"op": "replace", "row": 3, "content": "    - [x] Define scope"},
+  {"op": "replace", "row": 5, "content": "    - [ ] Get budget approved"}
+  {"op": "insert", "row": 7, "content": "    - [ ] Engage stakeholders"}
 
 ] 
