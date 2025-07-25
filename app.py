@@ -97,6 +97,31 @@ def show_clean_git_diff():
     except subprocess.CalledProcessError as e:
         logger.error(f"Git diff failed: {e}")
 
+def rollback_previous_commit():
+    try:
+        # Get the previous commit message
+        result = subprocess.run(["git", "log", "--oneline", "-1"], 
+                              capture_output=True, text=True, check=True)
+        if not result.stdout.strip():
+            logger.info("No commits to rollback")
+            return False
+        
+        # Check if the commit message starts with "Update todo:"
+        commit_line = result.stdout.strip()
+        if not commit_line.startswith("Update todo:"):
+            logger.info("Latest commit was not made by this app, cannot rollback")
+            return False
+        
+        # Reset to the previous commit
+        subprocess.run(["git", "reset", "--hard", "HEAD~1"], capture_output=True, check=True)
+        
+        logger.info("Previous change rolled back successfully")
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Rollback failed: {e}")
+        return False
+
 messages = []
 
 logger.info("Type your todo command (or 'q' to quit):")
@@ -144,11 +169,22 @@ while True:
         operations = json.loads(json_str)
         comment = '\n'.join(lines[end_idx:]).strip()
         
-        new_todo_lines = apply_row_operations(todo_lines, operations)
-        with open("todo.md", "w") as f:
-            f.write("\n".join(new_todo_lines))
-        logger.info(comment)
-        show_clean_git_diff()
+        # Check if any operation is a rollback
+        has_rollback = any(op.get("op") == "rollback" for op in operations)
+        
+        if has_rollback:
+            # Handle rollback
+            if rollback_previous_commit():
+                logger.info(comment)
+            else:
+                logger.error("Rollback failed")
+        else:
+            # Handle normal operations
+            new_todo_lines = apply_row_operations(todo_lines, operations)
+            with open("todo.md", "w") as f:
+                f.write("\n".join(new_todo_lines))
+            logger.info(comment)
+            show_clean_git_diff()
     except ValueError:
         logger.error("Could not find JSON array in LLM output.")
         continue

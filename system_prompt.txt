@@ -29,6 +29,7 @@ Your response must be formatted as follows:
 - **delete**: Delete a row. Parameters: row (one-based index)
 - **insert**: Insert a new row. Parameters: row (one-based index, where to insert), content (the new line)
 - **move**: Move a row to a new position. Parameters: row (one-based index of the row to move), to (one-based index of the new position)
+- **rollback**: Roll back the previous change/commit. No parameters needed. Use this when the user wants to undo their last action.
 
 ---
 
