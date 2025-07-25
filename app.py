@@ -86,6 +86,13 @@ def show_clean_git_diff():
             logger.info("Changes:\n" + content)
         else:
             logger.info("No changes detected")
+        
+        try:
+            subprocess.run(["git", "add", "todo.md"], capture_output=True, check=True)
+            subprocess.run(["git", "commit", "-m", f"Update todo: {user_command}"], capture_output=True, check=True)
+            
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Git commit failed: {e}")
             
     except subprocess.CalledProcessError as e:
         logger.error(f"Git diff failed: {e}")
