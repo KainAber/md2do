@@ -29,10 +29,12 @@ Current todo list (with row numbers):
 4:     - Get budget approved
 5:   * Execution
 
-User command: "Check off define scope and unblock get budget approved"
+User command: "Check off define scope, unblock get budget approved, and add new task for engaging stakeholders after get budget approved"
 
 Example output:
 [
   {"op": "replace", "row": 2, "content": "    - [x] Define scope"},
   {"op": "replace", "row": 4, "content": "    - [ ] Get budget approved"}
+  {"op": "insert", "row": 6, "content": "    - [ ] Engage stakeholders"}
+
 ] 
