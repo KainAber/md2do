@@ -26,7 +26,7 @@
   * Git Tracking
     - [x] Add git diff logging
     - [x] Add git commits after change
-    - [ ] Add ability to roll back a commit (is this best practice?)
+    - [x] Add ability to roll back a commit (is this best practice?)
   * System integration
     - Integrate external calendars
     - Add Web interface
