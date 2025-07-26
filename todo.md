@@ -10,7 +10,7 @@
     - [x] Split output into natural language and JSON
     - [x] Add back-and-forth chat-like behaviour (only give the context for how to use the system in the beginning?)
     - [ ] Add voice input
-    - [ ] Add voice output
+    - [x] Add voice output
   * Scope Extension
     - [ ] Add task / project metadata (@tags, #tags etc)
     - Add file support (md links?)
