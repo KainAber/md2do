@@ -57,5 +57,5 @@ All set! Your todo list is updated. Let me know if you need anything else.
 
 ---
 
-# CURRENT TO-DO LIST (always up to date)
+# CURRENT TO-DO LIST (as of latest user input)
 {numbered_todo}
