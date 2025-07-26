@@ -3,6 +3,7 @@
     - [x] Check out / Fix the consecutive edits + line bleed errors
   * Quality of Life
     - [ ] Remove all logging from the setup tools or package resources
+- [ ] Extract speech patterns and recording configurations into a separate config file
     - [x] Add logging with various levels (info, debug, etc)
   * Action Design
     - [ ] Add brainstorming capabilities for more conversational AI interactions
