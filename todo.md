@@ -28,7 +28,7 @@
     - [x] Add git diff logging
     - [x] Add git commits after change
     - [x] Add ability to roll back a commit (is this best practice?)
-    - [ ] Update rollback feature with a Python command instead of an LLM command
+    - Update rollback feature with a Python command instead of an LLM command
   * System integration
     - Integrate external calendars
     - Add Web interface
