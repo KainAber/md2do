@@ -82,6 +82,7 @@ def fill_user_prompt(user_prompt_template, user_input):
 def get_user_input():
     try:
         from src.voice_input import get_voice_input
+
         voice_input = get_voice_input()
         if voice_input:
             return voice_input
