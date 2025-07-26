@@ -2,10 +2,14 @@
 name = "md2do"
 version = "0.1.0"
 description = "Speech-to-LLM todo.md updater"
-requires-python = ">=3.8"
+requires-python = ">=3.8.1"
 dependencies = [
     "openai",
     "pyyaml",
     "pygame",
-    "pydub"
+    "pydub",
+    "black>=23.0.0"
 ]
+
+[tool.black]
+line-length = 88
