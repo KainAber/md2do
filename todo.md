@@ -4,6 +4,7 @@
   * Quality of Life
     - [x] Add logging with various levels (info, debug, etc)
   * Action Design
+- [ ] **Reformat to LLM functions via API**
     - [ ] **Try using unchanged bullets to give the LLM the opportunity to replace entire paragraphs**
   * Voice Conversation
     - [x] Split output into natural language and JSON
