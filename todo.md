@@ -7,7 +7,9 @@
     - [x] Add logging with various levels (info, debug, etc)
   * Action Design
     - [ ] Add brainstorming capabilities for more conversational AI interactions
-    - [ ] Try using unchanged bullets to give the LLM the opportunity to replace entire paragraphs
+- [ ] Try using unchanged bullets to give the LLM the opportunity to replace entire paragraphs
+- Try using unchanged bullets to give the LLM the opportunity to replace entire paragraphs
+- Try using unchanged bullets to give the LLM the opportunity to replace entire paragraphs
     - Explore OpenAI build tools
     - [x] Reformat to LLM functions via API
   * Voice Conversation
