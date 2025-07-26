@@ -33,16 +33,15 @@ def app():
 
     messages = [{"role": "system", "content": ""}]
 
-    logger.info("Type your todo command (or 'q' to quit):")
-
     while True:
         todo_md = get_todo_md()
         numbered_todo = format_numbered_todo(todo_md)
         system_prompt_filled = fill_system_prompt(system_prompt_template, numbered_todo)
 
         user_input = get_user_input()
-        if user_input.lower() == "q":
+        if not user_input.strip() or user_input.lower() in ["quit", "exit", "q", "stop"]:
             break
+
         user_prompt_filled = fill_user_prompt(user_prompt_template, user_input)
 
         messages[0] = {"role": "system", "content": system_prompt_filled}

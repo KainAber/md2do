@@ -80,7 +80,22 @@ def fill_user_prompt(user_prompt_template, user_input):
 
 
 def get_user_input():
-    return input("> ").strip()
+    try:
+        from src.voice_input import get_voice_input
+        voice_input = get_voice_input()
+        if voice_input:
+            return voice_input
+        else:
+            # Fallback to text input if voice input fails
+            logger.info("Voice input failed, falling back to text input")
+            return input("> ").strip()
+    except ImportError:
+        # Fallback to text input if voice input module is not available
+        logger.info("Voice input not available, using text input")
+        return input("> ").strip()
+    except Exception as e:
+        logger.error(f"Voice input error: {e}, falling back to text input")
+        return input("> ").strip()
 
 
 def get_model_response(client, messages, functions):
