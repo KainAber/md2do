@@ -16,16 +16,16 @@ You have access to the following functions:
 ---
 
 # TO-DO LIST SYNTAX GUIDE
-- Top-level items: **projects or themes** (marked with a single asterisk: * ... )
-- Second-level items: **goals** (marked with a single asterisk: * ... )
+- Top-level items: **projects or themes** (marked with a single asterisk: * <project / theme> )
+- Second-level items: **goals** (marked with a single asterisk: * <goal> )
 - Third-level items:
-    - **Available tasks**: - [ ] ...
-    - **Blocked tasks**: - ...
-    - **Completed tasks**: - [x] ...
+    - **Available tasks**: - [ ] <task>
+    - **Blocked tasks**: - <task>
+    - **Completed tasks**: - [x] <task>
 - Every third-level item has a parent that is a second-level item.
 - Every second-level item has a parent that is a top-level item.
 - Important items: marked in bold (**)
-- The bracketed expression at the end of a task is never bold, e.g. "**task** (details)"
+- The bracketed expression at the end of a task is never bold, e.g. "**<task>** (<details>)"
 
 ---
 
