@@ -2,6 +2,7 @@
   * Bugs
     - [x] Check out / Fix the consecutive edits + line bleed errors
   * Quality of Life
+    - [ ] Research a markdown viewer/editor for this setup
     - [ ] Remove all logging from the setup tools or package resources
     - [ ] Extract speech patterns and recording configurations into a separate config file
     - [x] Add logging with various levels (info, debug, etc)
@@ -23,7 +24,7 @@
     - Add calendar / scheduled items (timestamps?)
     - Add email
   * View Creation
-    - [ ] **Add ability to return a view of the todo.md** (expose python functions for filtering with regex? open .tmp file afterwards?)
+    - [ ] **Add ability to return a view of the todo.md** (first test = filter by task type; expose python functions for filtering with regex? open .tmp file afterwards? keep files updated, i.e., refresh .tmp files based on function calls (=names?))
   * OS-level Integration
     - Add context awareness of active window / row
     - Add continuous listening and trigger word activation
