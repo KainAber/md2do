@@ -12,7 +12,7 @@
     - Explore OpenAI build tools
     - [x] Add back-and-forth chat-like behaviour (only give the context for how to use the system in the beginning?)
     - [x] Add voice input prototype
-    - [ ] Add voice input
+    - [ ] Add voice input (also integrate with text input)
     - [x] Add voice output
   * Scope Extension
     - [ ] Add task / project metadata (@tags, #tags etc)
