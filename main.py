@@ -39,12 +39,11 @@ def app():
         system_prompt_filled = fill_system_prompt(system_prompt_template, numbered_todo)
 
         user_input = get_user_input()
-        if not user_input.strip() or user_input.lower() in [
+        if not user_input.strip() or any(user_input.lower().startswith(x) for x in [
             "quit",
             "exit",
-            "q",
             "stop",
-        ]:
+        ]):
             break
 
         user_prompt_filled = fill_user_prompt(user_prompt_template, user_input)
