@@ -11,6 +11,7 @@
     - [x] Split output into natural language and JSON
     - Explore OpenAI build tools
     - [x] Add back-and-forth chat-like behaviour (only give the context for how to use the system in the beginning?)
+- [x] Add voice input prototype task
     - [ ] Add voice input
     - [x] Add voice output
   * Scope Extension
