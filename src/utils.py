@@ -1,12 +1,17 @@
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+
 import yaml
 import json
 import logging
 import subprocess
 import re
 import importlib
-import os
+import tempfile
 from pathlib import Path
 from openai import OpenAI
+import pygame
+from pydub import AudioSegment
 
 debug_level = logging.DEBUG if os.getenv('DEBUG') else logging.INFO
 logging.basicConfig(
@@ -159,5 +164,78 @@ def add_function_call_to_messages(messages, response_message, function_name, fun
 
 def display_model_response(response_message):
     logger.info(response_message.content)
+
+def text_to_speech(client, text, voice="nova", speed=1.0):
+    try:
+        logger.debug(f"Converting text to speech: {text[:100]}...")
+        
+        # Create temporary files for the audio
+        with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
+            temp_audio_path = temp_file.name
+        
+        with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as speed_audio_path:
+            temp_speed_audio_path = speed_audio_path.name
+        
+        # Generate speech using OpenAI TTS
+        response = client.audio.speech.create(
+            model="tts-1",
+            voice=voice,
+            input=text
+        )
+        
+        # Save the audio to the temporary file
+        response.stream_to_file(temp_audio_path)
+        
+        # Speed up the audio if needed
+        if speed != 1.0:
+            audio = AudioSegment.from_mp3(temp_audio_path)
+            # Speed up by changing frame rate
+            faster_audio = audio._spawn(audio.raw_data, overrides={
+                "frame_rate": int(audio.frame_rate * speed)
+            })
+            # Set the frame rate back to original to maintain pitch
+            faster_audio = faster_audio.set_frame_rate(audio.frame_rate)
+            faster_audio.export(temp_speed_audio_path, format="mp3")
+            play_path = temp_speed_audio_path
+        else:
+            play_path = temp_audio_path
+        
+        # Play the audio using pygame
+        logger.debug(f"Playing audio from: {play_path}")
+        pygame.mixer.init()
+        pygame.mixer.music.load(play_path)
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)
+        
+        # Clean up the temporary files
+        os.unlink(temp_audio_path)
+        if speed != 1.0:
+            os.unlink(temp_speed_audio_path)
+        
+        logger.debug("TTS playback completed")
+        
+    except Exception as e:
+        logger.error(f"TTS error: {e}")
+        # Fall back to text output if TTS fails
+        logger.info(f"TTS failed, displaying text instead: {text}")
+
+def display_model_response_with_tts(client, response_message, enable_tts=True):
+    """
+    Display model response and optionally convert to speech.
+    
+    Args:
+        client: OpenAI client instance
+        response_message: The model's response message
+        enable_tts: Whether to enable text-to-speech
+    """
+    content = response_message.content
+    
+    # Always log the text response
+    logger.info(content)
+    
+    # Convert to speech if enabled
+    if enable_tts and content:
+        text_to_speech(client, content)
 
  

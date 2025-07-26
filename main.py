@@ -3,7 +3,7 @@ from src.utils import (
     load_function_schemas, load_functions_module, get_todo_md, format_numbered_todo,
     fill_system_prompt, fill_user_prompt, get_user_input, get_model_response,
     has_function_call, get_function_details, execute_function_call, get_clean_git_diff,
-    display_model_response, get_git_diff, add_function_call_to_messages, commit_todo_changes, logger
+    display_model_response_with_tts, get_git_diff, add_function_call_to_messages, commit_todo_changes, logger
 )
 
 def app():
@@ -51,13 +51,13 @@ def app():
             response_message = get_model_response(client, messages, functions)
             logger.debug(f"LLM response: {response_message}")
 
-        display_model_response(response_message)
-        messages.append({"role": "assistant", "content": response_message.content})
-
         change_message = get_clean_git_diff()
         if change_message:
             logger.info(change_message)
             commit_todo_changes(user_input)
+
+        display_model_response_with_tts(client, response_message)
+        messages.append({"role": "assistant", "content": response_message.content})
 
 if __name__ == "__main__":
     app()
