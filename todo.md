@@ -23,7 +23,7 @@
     - Add calendar / scheduled items (timestamps?)
     - Add email
   * View Creation
-    - [ ] Add ability to return a view of the todo.md (expose python functions for filtering with regex? open .tmp file afterwards?)
+    - [ ] **Add ability to return a view of the todo.md** (expose python functions for filtering with regex? open .tmp file afterwards?)
   * OS-level Integration
     - Add context awareness of active window / row
     - Add continuous listening and trigger word activation
