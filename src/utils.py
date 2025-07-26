@@ -111,38 +111,34 @@ def get_git_diff():
     
     return diff_output
 
-def show_clean_git_diff():
+def get_clean_git_diff():
     file_path = Path(__file__).parent.parent / "todo.md"
     try:
         result = subprocess.run(["git", "diff", "-U1", "--word-diff=color", str(file_path)], 
                               capture_output=True, text=True, check=True)
+        print(result.stdout)
         if not result.stdout.strip():
-            logger.info("No changes detected")
-            return False
+            return ""
         lines = result.stdout.split('\n')
         clean_lines = []
         for line in lines:
             clean_line = re.sub(r'\x1b\[[0-9;]*[mK]', '', line)
-            if (clean_line.startswith('diff --git') or 
-                clean_line.startswith('index ') or 
-                clean_line.startswith('---') or 
-                clean_line.startswith('+++') or
-                clean_line.startswith('@@')):
+            bad_line_starts = ['diff --git', 'index', '---', '+++', '@@']
+            print(clean_line)
+            if (any(clean_line.startswith(x) for x in bad_line_starts)):
                 clean_lines.append('')
             else:
                 clean_lines.append(line)
         content = '\n'.join(clean_lines)
         content = re.sub(r'\n\s*\n\s*\n+', '\n\n', content)
-        content = content.rstrip()
+        content = content.strip('\n')
         if content:
-            logger.info("Changes:\n" + content)
-            return True
+            return f"Changes:\n{content}"
         else:
-            logger.info("No changes detected")
-            return False
+            return ""
     except subprocess.CalledProcessError as e:
         logger.error(f"Git diff failed: {e}")
-        return False
+        return ""
 
 def commit_todo_changes(user_input):
     file_path = Path(__file__).parent.parent / "todo.md"

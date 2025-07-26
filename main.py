@@ -2,7 +2,7 @@ from src.utils import (
     get_system_prompt, get_user_prompt, get_openai_config, create_openai_client,
     load_function_schemas, load_functions_module, get_todo_md, format_numbered_todo,
     fill_system_prompt, fill_user_prompt, get_user_input, get_model_response,
-    has_function_call, get_function_details, execute_function_call, show_clean_git_diff,
+    has_function_call, get_function_details, execute_function_call, get_clean_git_diff,
     display_model_response, get_git_diff, add_function_call_to_messages, commit_todo_changes, logger
 )
 
@@ -54,7 +54,9 @@ def app():
         display_model_response(response_message)
         messages.append({"role": "assistant", "content": response_message.content})
 
-        if show_clean_git_diff():
+        change_message = get_clean_git_diff()
+        if change_message:
+            logger.info(change_message)
             commit_todo_changes(user_input)
 
 if __name__ == "__main__":
