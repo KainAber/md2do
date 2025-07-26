@@ -116,7 +116,6 @@ def get_clean_git_diff():
     try:
         result = subprocess.run(["git", "diff", "-U1", "--word-diff=color", str(file_path)], 
                               capture_output=True, text=True, check=True)
-        print(result.stdout)
         if not result.stdout.strip():
             return ""
         lines = result.stdout.split('\n')
@@ -124,7 +123,6 @@ def get_clean_git_diff():
         for line in lines:
             clean_line = re.sub(r'\x1b\[[0-9;]*[mK]', '', line)
             bad_line_starts = ['diff --git', 'index', '---', '+++', '@@']
-            print(clean_line)
             if (any(clean_line.startswith(x) for x in bad_line_starts)):
                 clean_lines.append('')
             else:
