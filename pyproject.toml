@@ -10,7 +10,8 @@ dependencies = [
     "pydub",
     "black>=23.0.0",
     "SpeechRecognition",
-    "pyaudio"
+    "pyaudio",
+    "openai-whisper"
 ]
 
 [tool.black]
