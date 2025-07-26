@@ -1,2 +1,4 @@
 openai_api_config.yml
 uv.lock
+__pycache__/ 
+**/__pycache__/

@@ -1,0 +1,79 @@
+[
+  {
+    "name": "replace_row",
+    "description": "Replace the content of a specific row in the todo list",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "row": {
+          "type": "integer",
+          "description": "The row number to replace (one-based index)"
+        },
+        "content": {
+          "type": "string",
+          "description": "The new content for the row"
+        }
+      },
+      "required": ["row", "content"]
+    }
+  },
+  {
+    "name": "delete_row",
+    "description": "Delete a specific row from the todo list",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "row": {
+          "type": "integer",
+          "description": "The row number to delete (one-based index)"
+        }
+      },
+      "required": ["row"]
+    }
+  },
+  {
+    "name": "insert_row",
+    "description": "Insert a new row at a specific position in the todo list",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "row": {
+          "type": "integer",
+          "description": "The position where to insert the new row (one-based index)"
+        },
+        "content": {
+          "type": "string",
+          "description": "The content for the new row"
+        }
+      },
+      "required": ["row", "content"]
+    }
+  },
+  {
+    "name": "move_row",
+    "description": "Move a row to a new position in the todo list",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "row": {
+          "type": "integer",
+          "description": "The row number to move (one-based index)"
+        },
+        "to": {
+          "type": "integer",
+          "description": "The new position for the row (one-based index)"
+        }
+      },
+      "required": ["row", "to"]
+    }
+  },
+  {
+    "name": "rollback_previous_commit",
+    "description": "Roll back the previous change/commit. Use this when the user wants to undo their last action.",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  }
+] 
