@@ -30,7 +30,7 @@ Your response must be formatted as follows:
 - **insert**: Insert a new row. Parameters: row (one-based index, where to insert), content (the new line)
 - **move**: Move a row to a new position. Parameters: row (one-based index of the row to move), to (one-based index of the new position)
 - **rollback**: Roll back the previous change/commit. No parameters needed. Use this when the user wants to undo their last action.
- 
+
 ---
 
 # STATIC EXAMPLE
@@ -57,5 +57,5 @@ All set! Your todo list is updated. Let me know if you need anything else.
 
 ---
 
-# CURRENT TO-DO LIST (operate on this)
-{numbered_todo} 
+# CURRENT TO-DO LIST (always up to date)
+{numbered_todo}
