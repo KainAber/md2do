@@ -1,0 +1,7 @@
+    - [ ] Research a markdown viewer/editor for this setup
+    - [ ] Remove all logging from the setup tools or package resources
+    - [ ] Extract speech patterns and recording configurations into a separate config file
+    - [ ] Add brainstorming capabilities for more conversational AI interactions
+    - [ ] Add voice input proper (have the ability to also do text input)
+    - [ ] Add task / project metadata (@tags, #tags etc)
+    - [ ] **Add ability to return a view of the todo.md** (first test = filter by task type; expose python functions for filtering with regex? open .tmp file afterwards? keep files updated, i.e., refresh .tmp files based on function calls (=names?))

@@ -75,5 +75,23 @@
       "properties": {},
       "required": []
     }
+  },
+  {
+    "name": "create_view",
+    "description": "Create a new view by applying a regex pattern to the todo.md file and saving the matches to a view file",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the view (will be used as filename without extension)"
+        },
+        "regex": {
+          "type": "string",
+          "description": "The regex pattern to match against todo.md lines"
+        }
+      },
+      "required": ["name", "regex"]
+    }
   }
 ] 
