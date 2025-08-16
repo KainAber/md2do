@@ -1,0 +1,4 @@
+shortcuts:
+  new_md:
+    keys: ["cmd", "ctrl", "alt"]
+    function: "new_md()"
