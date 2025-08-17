@@ -2,7 +2,7 @@
   * Bugs
     - [x] Check out / Fix the consecutive edits + line bleed errors
   * Quality of Life
-    - [ ] Research a markdown viewer/editor for this setup
+    - [x] Research a markdown viewer/editor for this setup
     - [ ] Remove all logging from the setup tools or package resources
     - [ ] Extract speech patterns and recording configurations into a separate config file
     - [x] Add logging with various levels (info, debug, etc)
