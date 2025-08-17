@@ -16,6 +16,7 @@ md2do is a Python application that combines:
 ## Features
 
 - 🎤 **Voice Input**: Speak your todo updates naturally
+- ⌨️ **Keyboard Shortcuts**: Quick access to common functions
 - 🤖 **AI Assistant**: Uses OpenAI to understand and execute complex commands
 - 📝 **Smart Todo Management**: Add, edit, delete, move, and reorganize tasks
 - 🔄 **Git Integration**: Automatic commits and rollback capabilities
@@ -49,6 +50,11 @@ md2do is a Python application that combines:
 - "Mark the task on view creation as bold"
 - "Rollback my last change"
 
+## Keyboard Shortcuts
+
+- **Cmd+Option+Shift**: Toggle voice listening on/off
+- **Cmd+Ctrl+Alt**: Create a new markdown file with timestamp
+
 ## Project Structure
 
 ```
@@ -76,6 +82,7 @@ md2do/
 - `pygame` & `pydub` - Audio playback
 - `openai-whisper` - Speech-to-text
 - `pyaudio` - Audio I/O
+- `pynput` - Keyboard monitoring and shortcuts
 
 ## Future Developments
 

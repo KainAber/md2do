@@ -11,7 +11,8 @@ dependencies = [
     "black>=23.0.0",
     "SpeechRecognition",
     "pyaudio",
-    "openai-whisper"
+    "openai-whisper",
+    "pynput"
 ]
 
 [tool.black]
