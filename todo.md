@@ -1,6 +1,25 @@
+# todo
+
 * md2do
   * Bugs
-    - [x] Check out / Fix the consecutive edits + line bleed errors
+    - [x] Check out / Fix the consecutive edits + line bleed errors#
+  * Neovim
+    - [x] Copy and paste (just use ctrl)
+    - [x] Loop back with arrow keys
+    - [x] Add jupyter notebook shortcuts for normal mode (abxcvudzy)
+    - [x] Set normal mode beginning of line, insert at end of line
+    - [x] Add toggling todos in normal mode
+    - [x] Add smart Enter in insert / smart a/b in normal mode
+    - [x] Add tab/shift tab in both insert and normal mode
+    - [x] Add syntax highlighting (done todos, important todos)
+    - [x] Fix md syntax highlighting bug !
+    - [ ] Add text conceals for md stuff (beware of bold bullets)
+    - [x] Change smart newline behaviour for insert mode (now only for md)
+    - [x] Update deletion in normal mode
+    - [ ] Try to redo the c v x commands to use CMD
+    - Add sync of title and first line for md files
+    - Add text selection with modifiers (shift=word-wise, option+ctrl in use)
+    - Add treesitter syntax highlighting
   * Quality of Life
     - [x] Research a markdown viewer/editor for this setup
     - [ ] Remove all logging from the setup tools or package resources

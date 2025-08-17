@@ -2,3 +2,6 @@ shortcuts:
   new_md:
     keys: ["cmd", "ctrl", "alt"]
     function: "new_md()"
+  toggle_listening:
+    keys: ["cmd", "alt", "shift"]
+    function: "toggle_listening()"
